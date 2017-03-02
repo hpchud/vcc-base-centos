@@ -13,13 +13,13 @@ RUN git clone https://github.com/tj/n.git \
 	&& rm -r n
 
 # use n to install node
-RUN n 6.4.0
+RUN n 6.9.5
 
 # install init8js
 WORKDIR /
 RUN git clone https://github.com/joshiggins/init8js.git \
 	&& cd init8js \
-	&& git checkout -q db31914d78089e85cabb74022514f50653063af1
+	&& git checkout -q 8b26e298145f364cee16524705a345de8ec59210
 WORKDIR /init8js
 RUN npm install
 RUN cp -r node_modules /lib/
