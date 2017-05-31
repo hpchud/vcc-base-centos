@@ -19,7 +19,7 @@ RUN n 6.9.5
 WORKDIR /
 RUN git clone https://github.com/joshiggins/init8js.git \
 	&& cd init8js \
-	&& git checkout -q 34b23c28712ca644634079b50774c2002c798f3f
+	&& git checkout -q 225834ea3fd3cf4872d6aa03a3b6e24b50ee4210
 WORKDIR /init8js
 RUN npm install
 RUN cp -r node_modules /lib/
@@ -29,7 +29,7 @@ RUN cp log.js /lib/node_modules/
 WORKDIR /
 RUN git clone https://github.com/hpchud/vccjs.git \
 	&& cd vccjs \
-	&& git checkout -q 061b71290b03ffc10e86b6ad663e4a8c56895087
+	&& git checkout -q 662b07a058079653af2aadc296c34530a283c486
 WORKDIR /vccjs
 RUN npm install
 
