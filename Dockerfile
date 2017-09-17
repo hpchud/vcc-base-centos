@@ -29,7 +29,7 @@ RUN cp log.js /lib/node_modules/
 WORKDIR /
 RUN git clone https://github.com/hpchud/vccjs.git \
 	&& cd vccjs \
-	&& git checkout -q f0ccb2e0028ed5d76032c396773ed5af5bfdeb2a
+	&& git checkout -q 883ee4fc255271128747e899a5c1f5eeb29d4004
 WORKDIR /vccjs
 RUN npm install
 
