@@ -15,27 +15,16 @@ RUN git clone https://github.com/tj/n.git \
 # use n to install node
 RUN n 6.9.5
 
-# install init8js
-WORKDIR /
-RUN git clone https://github.com/joshiggins/init8js.git \
-	&& cd init8js \
-	&& git checkout -q 225834ea3fd3cf4872d6aa03a3b6e24b50ee4210
-WORKDIR /init8js
-RUN npm install
-RUN cp -r node_modules /lib/
-RUN cp log.js /lib/node_modules/
-
 # install vccjs
 WORKDIR /
 RUN git clone https://github.com/hpchud/vccjs.git \
 	&& cd vccjs \
-	&& git checkout -q 662b07a058079653af2aadc296c34530a283c486
+	&& git checkout -q a363a32100bd38557d0c40a19778ec773a291516
 WORKDIR /vccjs
 RUN npm install
 
 # install configuration files
 RUN cp /vccjs/init.yml /etc/init.yml
-RUN cp /vccjs/services.yml /etc/services.yml
 RUN mkdir -p /etc/vcc
 
 # cluster hook scripts
@@ -44,5 +33,24 @@ RUN mkdir -p /etc/vcc/cluster-hooks.d
 # service hook scripts
 RUN mkdir /etc/vcc/service-hooks.d
 
+# remove unneeded systemd units
+RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+rm -f /lib/systemd/system/multi-user.target.wants/*;\
+rm -f /etc/systemd/system/*.wants/*;\
+rm -f /lib/systemd/system/local-fs.target.wants/*; \
+rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
+rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
+rm -f /lib/systemd/system/basic.target.wants/*;\
+rm -f /lib/systemd/system/anaconda.target.wants/*;
+
+# install systemd services
+RUN cp -r /vccjs/systemd/*.service /etc/systemd/system/
+RUN cp -r /vccjs/systemd/*.target /etc/systemd/system/
+RUN systemctl enable vcc*.service
+
+# volumes for systemd
+VOLUME ["/sys/fs/cgroup", "/tmp", "/run", "/run/lock"]
+
+# launch script
 WORKDIR /
 ENTRYPOINT ["/vccjs/launch.sh"]
