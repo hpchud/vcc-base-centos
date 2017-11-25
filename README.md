@@ -1,8 +1,16 @@
 # vcc-base-centos
 
-This is a CentOS-based VCC base image, containing the VCC tool, daemons and service manager entrypoint.
+This is the CentOS 7 base image.
 
-See the `vcc-torque` and the `vcc-hadoop` repositories for the sample applications that are built on this base image.
+It is built using the [vcc](https://github.com/hpchud/vccjs) framework and uses the systemd service manager.
+
+## Purpose of this image
+
+Typically, you would use this as a base for your own parallel container.
+
+When you run multiple instances of a container based on this image, linked together via a common discovery service, they will establish host/machine files and SSH keys automatically. You can dynamically add or remove containers and these services will be updated automatically.
+
+See [vcc-torque](https://github.com/hpchud/vccjs) for an example that models a PBS/Torque batch scheduling cluster.
 
 ## Building
 
@@ -20,4 +28,3 @@ docker build -t hpchud/vcc-base-centos \
     --build-arg https_proxy=http://proxy-server:3128 \
     .
 ```
-
