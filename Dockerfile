@@ -19,12 +19,12 @@ RUN n 6.9.5
 WORKDIR /
 RUN git clone https://github.com/hpchud/vccjs.git \
 	&& cd vccjs \
-	&& git checkout -q a363a32100bd38557d0c40a19778ec773a291516
+	&& git checkout -q ac13fcd530665bffab6a40077b41017287b3e1d3
 WORKDIR /vccjs
 RUN npm install
 
 # install configuration files
-RUN cp /vccjs/init.yml /etc/init.yml
+RUN cp /vccjs/cluster.yml /etc/cluster.yml
 RUN mkdir -p /etc/vcc
 
 # cluster hook scripts
@@ -45,8 +45,7 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 # install systemd services
 RUN cp -r /vccjs/systemd/*.service /etc/systemd/system/
-RUN cp -r /vccjs/systemd/*.target /etc/systemd/system/
-RUN systemctl enable vcc*.service
+RUN cd /etc/systemd/system && systemctl enable vcc*
 
 # volumes for systemd
 VOLUME ["/sys/fs/cgroup", "/tmp", "/run", "/run/lock"]
