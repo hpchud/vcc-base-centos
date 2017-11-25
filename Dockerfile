@@ -47,6 +47,11 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 RUN cp -r /vccjs/systemd/*.service /etc/systemd/system/
 RUN cd /etc/systemd/system && systemctl enable vcc*
 
+# install a service to trigger the network targets
+ADD container-network.service /etc/systemd/system/container-network.service
+RUN systemctl enable container-network.service
+RUN systemctl enable sshd
+
 # volumes for systemd
 VOLUME ["/sys/fs/cgroup", "/tmp", "/run", "/run/lock"]
 
