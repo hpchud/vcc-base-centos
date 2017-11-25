@@ -10,7 +10,7 @@ Typically, you would use this as a base for your own parallel container.
 
 When you run multiple instances of a container based on this image, linked together via a common discovery service, they will establish host/machine files and SSH keys automatically. You can dynamically add or remove containers and these services will be updated automatically.
 
-See [vcc-torque](https://github.com/hpchud/vccjs) for an example that models a PBS/Torque batch scheduling cluster.
+See [vcc-torque](https://github.com/hpchud/vcc-torque) for an example that models a PBS/Torque batch scheduling cluster.
 
 ## Building
 
