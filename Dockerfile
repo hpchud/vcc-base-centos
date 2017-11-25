@@ -19,7 +19,7 @@ RUN n 6.9.5
 WORKDIR /
 RUN git clone https://github.com/hpchud/vccjs.git \
 	&& cd vccjs \
-	&& git checkout -q ac13fcd530665bffab6a40077b41017287b3e1d3
+	&& git checkout -q 85cdde2a54ad688342895167cb343a1f5cfa3f14
 WORKDIR /vccjs
 RUN npm install
 
@@ -45,6 +45,7 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 # install systemd services
 RUN cp -r /vccjs/systemd/*.service /etc/systemd/system/
+RUN cp -r /vccjs/systemd/*.target /etc/systemd/system/
 RUN cd /etc/systemd/system && systemctl enable vcc*
 
 # install a service to trigger the network targets
