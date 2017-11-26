@@ -19,7 +19,7 @@ RUN n 6.9.5
 WORKDIR /
 RUN git clone https://github.com/hpchud/vccjs.git \
 	&& cd vccjs \
-	&& git checkout -q 4170b69f030e3b6d96c0a782041d242a0d0a102b
+	&& git checkout -q eb2626856906f4c3beec608b9a69c2fc74236403
 WORKDIR /vccjs
 RUN npm install
 
